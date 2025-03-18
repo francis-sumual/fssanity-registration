@@ -37,7 +37,7 @@ export async function login(email: string, password: string) {
     };
 
     // Store session in a cookie
-    (await cookies()).set({
+    cookies().set({
       name: "session",
       value: JSON.stringify(session),
       httpOnly: true,
@@ -93,13 +93,13 @@ export async function register(name: string, email: string, password: string) {
   }
 }
 
-export async function logout() {
-  (await cookies()).delete("session");
-  return { success: true };
+// Update the logout function to accept FormData parameter and return Promise<void>
+export async function logout(_formData?: FormData): Promise<void> {
+  cookies().delete("session");
 }
 
 export async function getSession() {
-  const sessionCookie = (await cookies()).get("session");
+  const sessionCookie = cookies().get("session");
 
   if (!sessionCookie) {
     return null;
