@@ -7,6 +7,13 @@ import { PublicRegistrationForm } from "@/components/public-registration-form";
 import { PublicRegistrationList } from "@/components/public-registration-list";
 import { fetchActiveGatherings, fetchGroups, fetchMembers, fetchRegistrations } from "@/lib/actions";
 
+// Define the Registration type
+interface Registration {
+  _id: string;
+  gatheringId: string;
+  memberId: string;
+}
+
 export default async function Home() {
   // Fetch data for registration form and list
   const [gatherings, groups, members, registrations] = await Promise.all([
@@ -17,27 +24,30 @@ export default async function Home() {
   ]);
 
   // Create a list of existing registrations for filtering
-  const existingRegistrations = registrations.map((reg) => ({
+  const existingRegistrations = registrations.map((reg: Registration) => ({
     gatheringId: reg.gatheringId,
     memberId: reg.memberId,
   }));
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="">
+      <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-            <span>FSDevelopment</span>
+            <span>CompanyName</span>
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link href="#about" className="text-sm font-medium hover:underline underline-offset-4">
               About
             </Link>
             <Link href="#registration" className="text-sm font-medium hover:underline underline-offset-4">
-              Daftar Tugas
+              Registration
             </Link>
             <Link href="#attendees" className="text-sm font-medium hover:underline underline-offset-4">
-              List Pendaftar
+              Attendees
+            </Link>
+            <Link href="#contact" className="text-sm font-medium hover:underline underline-offset-4">
+              Contact
             </Link>
           </nav>
           <div className="flex gap-4">
@@ -52,7 +62,7 @@ export default async function Home() {
         <AboutSection />
 
         {/* Registration Section */}
-        <section id="registration" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="registration" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
@@ -93,7 +103,7 @@ export default async function Home() {
             </div>
 
             {gatherings.length > 0 ? (
-              <div className="mx-auto max-w-4xl space-y-8 mb-2">
+              <div className="mx-auto max-w-4xl space-y-8">
                 {gatherings.map((gathering) => (
                   <PublicRegistrationList
                     key={gathering._id}
