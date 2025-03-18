@@ -14,6 +14,15 @@ interface Registration {
   memberId: string;
 }
 
+// Define the Gathering type
+interface Gathering {
+  _id: string;
+  title: string;
+  date: string;
+  location: string;
+  description: string;
+}
+
 export default async function Home() {
   // Fetch data for registration form and list
   const [gatherings, groups, members, registrations] = await Promise.all([
@@ -104,7 +113,7 @@ export default async function Home() {
 
             {gatherings.length > 0 ? (
               <div className="mx-auto max-w-4xl space-y-8">
-                {gatherings.map((gathering) => (
+                {gatherings.map((gathering: Gathering) => (
                   <PublicRegistrationList
                     key={gathering._id}
                     registrations={registrations}
