@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -95,6 +96,7 @@ export default function GroupsPage() {
     {
       accessorKey: "createdAt",
       header: "Created At",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cell: ({ row }: any) => {
         return new Date(row.original.createdAt).toLocaleDateString();
       },

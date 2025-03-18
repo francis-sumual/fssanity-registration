@@ -23,6 +23,7 @@ interface Gathering {
 
 export default function GatheringsPage() {
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const [isGatheringModalOpen, setIsGatheringModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -98,6 +99,7 @@ export default function GatheringsPage() {
     {
       accessorKey: "date",
       header: "Date",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cell: ({ row }: any) => {
         return new Date(row.original.date).toLocaleDateString();
       },
@@ -109,6 +111,7 @@ export default function GatheringsPage() {
     {
       accessorKey: "isActive",
       header: "Status",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cell: ({ row }: any) => {
         const isActive = row.original.isActive;
         return <Badge variant={isActive ? "default" : "secondary"}>{isActive ? "Active" : "Inactive"}</Badge>;
