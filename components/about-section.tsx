@@ -1,8 +1,25 @@
+import Image from "next/image";
 import { getHomePageContent } from "@/lib/sanity";
+
+// Define the Feature type
+interface Feature {
+  title: string;
+  description: string;
+}
+
+// Define the About type
+interface About {
+  title: string;
+  description: string;
+  features: Feature[];
+  image?: {
+    url: string;
+  };
+}
 
 export default async function AboutSection() {
   const homeData = await getHomePageContent();
-  const about = homeData?.about || {
+  const about: About = homeData?.about || {
     title: "About Us",
     description:
       "We are a team of passionate individuals dedicated to providing the best service to our customers. Our mission is to empower businesses with innovative solutions.",
@@ -36,7 +53,7 @@ export default async function AboutSection() {
         <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col justify-center space-y-4">
             <ul className="grid gap-6">
-              {about.features?.map((feature, index) => (
+              {about.features?.map((feature: Feature, index: number) => (
                 <li key={index}>
                   <div className="grid gap-1">
                     <h3 className="text-xl font-bold">{feature.title}</h3>
@@ -46,7 +63,7 @@ export default async function AboutSection() {
               ))}
             </ul>
           </div>
-          {/* <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center">
             {about.image ? (
               <Image
                 src={about.image.url || "/placeholder.svg"}
@@ -60,7 +77,7 @@ export default async function AboutSection() {
                 <span className="text-lg font-medium">About Image</span>
               </div>
             )}
-          </div> */}
+          </div>
         </div>
       </div>
     </section>
