@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getHomePageContent } from "@/lib/sanity";
 
 export default async function AboutSection() {
