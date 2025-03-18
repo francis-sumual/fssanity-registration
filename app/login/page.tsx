@@ -1,12 +1,18 @@
-import { LoginForm } from "@/components/login-form"
-import Link from "next/link"
+import { LoginForm } from "@/components/login-form";
+import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Login",
+  description: "Login to your account",
+};
 
 export default function LoginPage({
   searchParams,
 }: {
-  searchParams: { registered?: string }
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const justRegistered = searchParams.registered === "true"
+  const justRegistered = searchParams.registered === "true";
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted py-12">
@@ -16,8 +22,8 @@ export default function LoginPage({
           <p className="text-muted-foreground">Enter your credentials to access your dashboard</p>
           <p className="text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="text-primary underline underline-offset-4">
-              Sign up here
+            <Link href="/" className="text-primary underline underline-offset-4">
+              Cancel
             </Link>
           </p>
         </div>
@@ -44,6 +50,5 @@ export default function LoginPage({
         </div>
       </div>
     </div>
-  )
+  );
 }
-
