@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use server";
 
 import { cookies } from "next/headers";
@@ -37,7 +38,7 @@ export async function login(email: string, password: string) {
     };
 
     // Store session in a cookie
-    cookies().set({
+    (await cookies()).set({
       name: "session",
       value: JSON.stringify(session),
       httpOnly: true,
@@ -95,11 +96,11 @@ export async function register(name: string, email: string, password: string) {
 
 // Update the logout function to accept FormData parameter and return Promise<void>
 export async function logout(_formData?: FormData): Promise<void> {
-  cookies().delete("session");
+  (await cookies()).delete("session");
 }
 
 export async function getSession() {
-  const sessionCookie = cookies().get("session");
+  const sessionCookie = (await cookies()).get("session");
 
   if (!sessionCookie) {
     return null;
