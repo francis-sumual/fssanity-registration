@@ -7,12 +7,13 @@ export const metadata: Metadata = {
   description: "Login to your account",
 };
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const justRegistered = searchParams.registered === "true";
+  const resolvedParams = await searchParams;
+  const justRegistered = resolvedParams.registered === "true";
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted py-12">
