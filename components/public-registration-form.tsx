@@ -206,6 +206,7 @@ export function PublicRegistrationForm({
                 {gatherings.map((gathering) => (
                   <SelectItem key={gathering._id} value={gathering._id}>
                     {gathering.title}
+                    {" - "}
                     <span>
                       {new Intl.DateTimeFormat("id-ID", {
                         year: "numeric",
