@@ -151,11 +151,6 @@ export function PublicRegistrationForm({
     }
   };
 
-  // Format date for display
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString();
-  };
-
   // Get selected gathering details
   const selectedGathering = gatherings.find((g) => g._id === formData.gatheringId);
   const selectedMember = members.find((m) => m._id === formData.memberId);
