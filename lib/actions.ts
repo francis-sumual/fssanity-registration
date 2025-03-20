@@ -116,7 +116,8 @@ export async function getSession() {
 // Group management functions
 export async function fetchGroups() {
   try {
-    const groups = await client.fetch(`
+    const groups = await client.fetch(
+      `
       *[_type == "group"] | order(name asc) {
         _id,
         name,
@@ -124,7 +125,10 @@ export async function fetchGroups() {
         createdAt,
         "memberCount": count(*[_type == "member" && references(^._id)])
       }
-    `);
+      `,
+      {},
+      { cache: "no-store" }
+    );
     return groups;
   } catch (error) {
     console.error("Error fetching groups:", error);
@@ -186,7 +190,8 @@ export async function deleteGroup(id: string) {
 // Member management functions
 export async function fetchMembers() {
   try {
-    const members = await client.fetch(`
+    const members = await client.fetch(
+      `
       *[_type == "member"] | order(name asc) {
         _id,
         name,
@@ -197,7 +202,10 @@ export async function fetchMembers() {
         role,
         joinedAt
       }
-    `);
+      `,
+      {},
+      { cache: "no-store" }
+    );
     return members;
   } catch (error) {
     console.error("Error fetching members:", error);
@@ -296,7 +304,9 @@ export async function fetchGatherings() {
 
 export async function fetchActiveGatherings() {
   try {
-    const gatherings = await client.fetch(`
+    // Add cache: 'no-store' option to the client to disable caching
+    const gatherings = await client.fetch(
+      `
       *[_type == "gathering" && isActive == true] | order(date asc) {
         _id,
         title,
@@ -304,7 +314,10 @@ export async function fetchActiveGatherings() {
         location,
         description
       }
-    `);
+      `,
+      {},
+      { cache: "no-store" }
+    );
     return gatherings;
   } catch (error) {
     console.error("Error fetching active gatherings:", error);
@@ -377,7 +390,8 @@ export async function deleteGathering(id: string) {
 // Registration management functions
 export async function fetchRegistrations() {
   try {
-    const registrations = await client.fetch(`
+    const registrations = await client.fetch(
+      `
       *[_type == "registration"] | order(registeredAt desc) {
         _id,
         "gatheringId": gathering._ref,
@@ -389,7 +403,10 @@ export async function fetchRegistrations() {
         status,
         registeredAt
       }
-    `);
+      `,
+      {},
+      { cache: "no-store" }
+    );
     return registrations;
   } catch (error) {
     console.error("Error fetching registrations:", error);

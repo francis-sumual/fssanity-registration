@@ -7,6 +7,9 @@ import { PublicRegistrationForm } from "@/components/public-registration-form";
 import { PublicRegistrationList } from "@/components/public-registration-list";
 import { fetchActiveGatherings, fetchGroups, fetchMembers, fetchRegistrations } from "@/lib/actions";
 
+// Add this at the top of the file, after the imports
+export const dynamic = "force-dynamic";
+
 // Define the Registration type
 interface Registration {
   _id: string;
@@ -43,7 +46,7 @@ export default async function Home() {
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-            <span>FSDevelopement</span>
+            <span>CompanyName</span>
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link href="#about" className="text-sm font-medium hover:underline underline-offset-4">
