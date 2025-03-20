@@ -93,7 +93,13 @@ export function PublicRegistrationList({ registrations, gatheringId, gatheringTi
                       {regs.map((reg) => (
                         <TableRow key={reg._id}>
                           <TableCell className="font-medium">{reg.memberName}</TableCell>
-                          <TableCell className="hidden md:table-cell">{formatDate(reg.registeredAt)}</TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            {new Intl.DateTimeFormat("id-ID", {
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                            }).format(new Date(reg.registeredAt))}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

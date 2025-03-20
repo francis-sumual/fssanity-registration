@@ -210,7 +210,12 @@ export function PublicRegistrationForm({
               <SelectContent>
                 {gatherings.map((gathering) => (
                   <SelectItem key={gathering._id} value={gathering._id}>
-                    {gathering.title} ({formatDate(gathering.date)})
+                    {gathering.title}
+                    {new Intl.DateTimeFormat("id-ID", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    }).format(new Date(gathering.date))}
                   </SelectItem>
                 ))}
               </SelectContent>
