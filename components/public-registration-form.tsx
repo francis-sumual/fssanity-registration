@@ -211,11 +211,13 @@ export function PublicRegistrationForm({
                 {gatherings.map((gathering) => (
                   <SelectItem key={gathering._id} value={gathering._id}>
                     {gathering.title}
-                    {new Intl.DateTimeFormat("id-ID", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    }).format(new Date(gathering.date))}
+                    <span>
+                      {new Intl.DateTimeFormat("id-ID", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                      }).format(new Date(gathering.date))}
+                    </span>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -225,7 +227,11 @@ export function PublicRegistrationForm({
               <div className="mt-2 text-sm text-muted-foreground">
                 <div className="flex items-center mt-1">
                   <Calendar className="h-3 w-3 mr-1" />
-                  {formatDate(selectedGathering.date)}
+                  {new Intl.DateTimeFormat("id-ID", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                  }).format(new Date(selectedGathering.date))}
                 </div>
                 {selectedGathering.location && (
                   <div className="flex items-center mt-1">
