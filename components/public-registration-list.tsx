@@ -56,18 +56,18 @@ export function PublicRegistrationList({ registrations, gatheringId, gatheringTi
             <CardDescription className="mt-2">
               <span className="inline-flex items-center mr-4">
                 <Users className="h-4 w-4 mr-1" />
-                {filteredRegistrations.length} registered attendees
+                {filteredRegistrations.length} Prodikon terdaftar
               </span>
             </CardDescription>
           </div>
-          <Badge className="text-sm px-3 py-1">{filteredRegistrations.length} Attendees</Badge>
+          <Badge className="text-sm px-3 py-1">{filteredRegistrations.length} Prodiakon/Prodiakones</Badge>
         </div>
       </CardHeader>
       <CardContent>
         {filteredRegistrations.length === 0 ? (
           <div className="text-center py-8 border rounded-md bg-muted/30">
-            <p className="text-muted-foreground">No registrations yet for this gathering.</p>
-            <p className="text-sm text-muted-foreground mt-1">Be the first to register!</p>
+            <p className="text-muted-foreground">Belum ada yang mendaftar untuk tugas misa ini.</p>
+            <p className="text-sm text-muted-foreground mt-1">Jadilah pertama yang mendaftar!</p>
           </div>
         ) : (
           <div className="space-y-6">

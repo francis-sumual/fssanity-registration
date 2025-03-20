@@ -15,7 +15,7 @@ export default function Footer() {
             List Pendaftar
           </Link>
           <Link href="#about" className="text-sm font-medium hover:underline underline-offset-4">
-            About
+            Petunjuk
           </Link>
         </nav>
       </div>

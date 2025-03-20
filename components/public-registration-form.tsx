@@ -163,8 +163,8 @@ export function PublicRegistrationForm({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Register for a Gathering</CardTitle>
-        <CardDescription>Select your group and name to register for an upcoming gathering</CardDescription>
+        <CardTitle>Pendaftaran Tugas</CardTitle>
+        <CardDescription>Pilih Misa dan Kelompok</CardDescription>
       </CardHeader>
       <CardContent>
         {success && (
@@ -172,9 +172,9 @@ export function PublicRegistrationForm({
             <div className="flex items-center">
               <CheckCircle className="h-4 w-4 mr-2" />
               <div>
-                <AlertTitle>Registration Successful!</AlertTitle>
+                <AlertTitle>Pendaftaran Berhasil!</AlertTitle>
                 <AlertDescription>
-                  {selectedMember?.name} has been registered for {selectedGathering?.title}.
+                  {selectedMember?.name} Anda telah terdaftar untuk tugas Misa {selectedGathering?.title}.
                   <div className="mt-1 flex items-center text-sm">
                     <RefreshCw className="h-3 w-3 mr-1 animate-spin" />
                     Refreshing page...
@@ -197,7 +197,7 @@ export function PublicRegistrationForm({
           <div className="space-y-2">
             <Label htmlFor="gatheringId" className="flex items-center">
               <Calendar className="h-4 w-4 mr-2" />
-              Gathering
+              Misa
             </Label>
             <Select
               value={formData.gatheringId}
@@ -235,7 +235,7 @@ export function PublicRegistrationForm({
           <div className="space-y-2">
             <Label htmlFor="groupId" className="flex items-center">
               <Users className="h-4 w-4 mr-2" />
-              Group
+              Kelompok
             </Label>
             <Select
               value={formData.groupId}
@@ -243,7 +243,7 @@ export function PublicRegistrationForm({
               disabled={isLoading || success}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select your group" />
+                <SelectValue placeholder="Pilih kelompok anda" />
               </SelectTrigger>
               <SelectContent>
                 {groups.map((group) => (
@@ -258,7 +258,7 @@ export function PublicRegistrationForm({
           <div className="space-y-2">
             <Label htmlFor="memberId" className="flex items-center">
               <User className="h-4 w-4 mr-2" />
-              Your Name
+              Nama Anda
             </Label>
             <Select
               value={formData.memberId}
@@ -269,10 +269,10 @@ export function PublicRegistrationForm({
                 <SelectValue
                   placeholder={
                     !formData.groupId
-                      ? "Select a group first"
+                      ? "Pilh kelompok terlebih dahulu"
                       : filteredMembers.length === 0
                       ? "No available members"
-                      : "Select your name"
+                      : "Pilih Nama Anda"
                   }
                 />
               </SelectTrigger>
@@ -307,7 +307,7 @@ export function PublicRegistrationForm({
           {isLoading ? (
             <>
               <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-              Registering...
+              Mendaftarkan anda...
             </>
           ) : success ? (
             <>
@@ -315,7 +315,7 @@ export function PublicRegistrationForm({
               Refreshing...
             </>
           ) : (
-            "Register"
+            "Daftar"
           )}
         </Button>
       </CardFooter>

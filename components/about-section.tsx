@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getHomePageContent } from "@/lib/sanity";
 
 // Define the Feature type
@@ -20,21 +19,20 @@ interface About {
 export default async function AboutSection() {
   const homeData = await getHomePageContent();
   const about: About = homeData?.about || {
-    title: "About Us",
-    description:
-      "We are a team of passionate individuals dedicated to providing the best service to our customers. Our mission is to empower businesses with innovative solutions.",
+    title: "Tata Cara Pendaftaran",
+    description: "Perhatikan petunjuk dibawah untuk mendaftar, jika ada masalah silahkan hubungi ketua kelompok anda.",
     features: [
       {
-        title: "Our Vision",
-        description: "To be the leading provider of innovative solutions in our industry.",
+        title: "Petunjuk pertama",
+        description: "Pilih Jadwal Misa.",
       },
       {
-        title: "Our Values",
-        description: "Integrity, excellence, innovation, and customer satisfaction.",
+        title: "Petunjuk Kedua",
+        description: "Pilih Kelompok.",
       },
       {
-        title: "Our Team",
-        description: "A diverse group of experts committed to delivering exceptional results.",
+        title: "Petunjuk Ketiga",
+        description: "Pilih Nama Anda dan Klik Daftar.",
       },
     ],
   };
@@ -62,21 +60,6 @@ export default async function AboutSection() {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="flex items-center justify-center">
-            {about.image ? (
-              <Image
-                src={about.image.url || "/placeholder.svg"}
-                alt={about.title}
-                width={400}
-                height={300}
-                className="rounded-lg object-cover"
-              />
-            ) : (
-              <div className="relative h-[300px] w-full bg-gradient-to-r from-primary/20 to-secondary/20 rounded-lg flex items-center justify-center text-muted-foreground">
-                <span className="text-lg font-medium">About Image</span>
-              </div>
-            )}
           </div>
         </div>
       </div>

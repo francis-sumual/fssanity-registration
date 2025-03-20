@@ -46,20 +46,17 @@ export default async function Home() {
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-            <span>CompanyName</span>
+            <span>FSDevelopment</span>
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link href="#about" className="text-sm font-medium hover:underline underline-offset-4">
-              About
+              Petunjuk
             </Link>
             <Link href="#registration" className="text-sm font-medium hover:underline underline-offset-4">
               Registration
             </Link>
             <Link href="#attendees" className="text-sm font-medium hover:underline underline-offset-4">
-              Attendees
-            </Link>
-            <Link href="#contact" className="text-sm font-medium hover:underline underline-offset-4">
-              Contact
+              List Pendaftaran
             </Link>
           </nav>
           <div className="flex gap-4">
@@ -78,9 +75,9 @@ export default async function Home() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Gathering Registration</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Sistim Pendaftaran Prodiakon</h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Register for our upcoming gatherings
+                  Tugas Misa Tri Hari Suci
                 </p>
               </div>
             </div>
@@ -96,7 +93,7 @@ export default async function Home() {
               </div>
             ) : (
               <div className="text-center p-8 bg-background rounded-lg shadow-sm max-w-md mx-auto">
-                <p className="text-muted-foreground">No active gatherings available at the moment.</p>
+                <p className="text-muted-foreground">Tidak ada Misa yang available saat ini.</p>
               </div>
             )}
           </div>
@@ -107,9 +104,11 @@ export default async function Home() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Registered Attendees</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Prodiakon/Prodiakones yang sudah terdaftar
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  See who is already registered for our upcoming gatherings
+                  Lihat pendaftaran
                 </p>
               </div>
             </div>
@@ -127,7 +126,7 @@ export default async function Home() {
               </div>
             ) : (
               <div className="text-center p-8 bg-background rounded-lg shadow-sm max-w-md mx-auto">
-                <p className="text-muted-foreground">No active gatherings available at the moment.</p>
+                <p className="text-muted-foreground">Tidak ada Misa yang available saat ini.</p>
               </div>
             )}
           </div>
