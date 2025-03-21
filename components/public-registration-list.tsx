@@ -51,11 +51,6 @@ export function PublicRegistrationList({
     return regsA[0].groupName.localeCompare(regsB[0].groupName);
   });
 
-  // Format date for display
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString();
-  };
-
   return (
     <Card className="w-full">
       <CardHeader>
@@ -103,14 +98,22 @@ export function PublicRegistrationList({
                     <TableHeader>
                       <TableRow>
                         <TableHead>Name</TableHead>
-                        <TableHead className="hidden md:table-cell">Registered On</TableHead>
+                        <TableHead className="hidden md:table-cell">Tanggal Mendaftar</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {regs.map((reg) => (
                         <TableRow key={reg._id}>
-                          <TableCell className="font-medium">{reg.memberName}</TableCell>
-                          <TableCell className="hidden md:table-cell">{formatDate(reg.registeredAt)}</TableCell>
+                          <TableCell width={600} className="font-medium">
+                            {reg.memberName}
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            {new Intl.DateTimeFormat("id-ID", {
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                            }).format(new Date(reg.registeredAt))}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
