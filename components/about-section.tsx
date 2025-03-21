@@ -20,7 +20,8 @@ export default async function AboutSection() {
   const homeData = await getHomePageContent();
   const about: About = homeData?.about || {
     title: "Tata Cara Pendaftaran",
-    description: "Perhatikan petunjuk dibawah untuk mendaftar, jika ada masalah silahkan hubungi ketua kelompok anda.",
+    description:
+      "Perhatikan petunjuk dibawah untuk mendaftar, jika ada masalah silahkan hubungi Bpk. J. Irawan atau hubungi ketua kelompok anda.",
     features: [
       {
         title: "Petunjuk pertama",

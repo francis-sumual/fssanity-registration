@@ -28,6 +28,7 @@ interface GatheringModalProps {
     description: string;
     date: string;
     location: string;
+    quota?: number;
     isActive: boolean;
   } | null;
   onSuccess: () => void;
@@ -39,6 +40,7 @@ export function GatheringModal({ open, onOpenChange, gathering, onSuccess }: Gat
     description: "",
     date: "",
     location: "",
+    quota: "",
     isActive: true,
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +55,7 @@ export function GatheringModal({ open, onOpenChange, gathering, onSuccess }: Gat
         description: gathering.description,
         date: formattedDate,
         location: gathering.location,
+        quota: gathering.quota?.toString() || "",
         isActive: gathering.isActive,
       });
     } else {
@@ -61,6 +64,7 @@ export function GatheringModal({ open, onOpenChange, gathering, onSuccess }: Gat
         description: "",
         date: "",
         location: "",
+        quota: "",
         isActive: true,
       });
     }
@@ -80,14 +84,27 @@ export function GatheringModal({ open, onOpenChange, gathering, onSuccess }: Gat
     setIsLoading(true);
 
     try {
+      // Convert quota to number or undefined
+      const quotaValue = formData.quota ? Number.parseInt(formData.quota) : undefined;
+
+      // Validate quota is a positive number
+      if (formData.quota && (isNaN(quotaValue!) || quotaValue! <= 0)) {
+        throw new Error("Quota must be a positive number");
+      }
+
+      const dataToSubmit = {
+        ...formData,
+        quota: quotaValue,
+      };
+
       if (gathering) {
-        await updateGathering(gathering._id, formData);
+        await updateGathering(gathering._id, dataToSubmit);
         toast({
           title: "Success",
           description: "Gathering updated successfully",
         });
       } else {
-        await createGathering(formData);
+        await createGathering(dataToSubmit);
         toast({
           title: "Success",
           description: "Gathering created successfully",
@@ -99,7 +116,7 @@ export function GatheringModal({ open, onOpenChange, gathering, onSuccess }: Gat
       console.error("Failed to save gathering:", error);
       toast({
         title: "Error",
-        description: "Failed to save gathering. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to save gathering. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -156,6 +173,21 @@ export function GatheringModal({ open, onOpenChange, gathering, onSuccess }: Gat
                   required
                 />
               </div>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="quota">Maximum Capacity</Label>
+              <Input
+                id="quota"
+                name="quota"
+                type="number"
+                min="1"
+                value={formData.quota}
+                onChange={handleChange}
+                placeholder="Leave empty for unlimited"
+              />
+              <p className="text-xs text-muted-foreground">
+                Maximum number of attendees allowed. Leave empty for unlimited capacity.
+              </p>
             </div>
             <div className="flex items-center space-x-2">
               <Switch id="isActive" checked={formData.isActive} onCheckedChange={handleSwitchChange} />

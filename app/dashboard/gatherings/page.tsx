@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -18,13 +19,14 @@ interface Gathering {
   description: string;
   date: string;
   location: string;
+  quota?: number;
+  registrationCount: number;
   isActive: boolean;
   createdAt: string;
 }
 
 export default function GatheringsPage() {
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const [isGatheringModalOpen, setIsGatheringModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -100,7 +102,6 @@ export default function GatheringsPage() {
     {
       accessorKey: "date",
       header: "Date",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cell: ({ row }: any) => {
         return new Date(row.original.date).toLocaleDateString();
       },
@@ -110,9 +111,31 @@ export default function GatheringsPage() {
       header: "Location",
     },
     {
+      accessorKey: "quota",
+      header: "Capacity",
+      cell: ({ row }: any) => {
+        const quota = row.original.quota;
+        const registrationCount = row.original.registrationCount;
+
+        if (!quota) return "Unlimited";
+
+        return (
+          <div className="flex items-center">
+            <span className={registrationCount >= quota ? "text-red-500 font-medium" : ""}>
+              {registrationCount} / {quota}
+            </span>
+            {registrationCount >= quota && (
+              <Badge variant="destructive" className="ml-2">
+                Full
+              </Badge>
+            )}
+          </div>
+        );
+      },
+    },
+    {
       accessorKey: "isActive",
       header: "Status",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cell: ({ row }: any) => {
         const isActive = row.original.isActive;
         return <Badge variant={isActive ? "default" : "secondary"}>{isActive ? "Active" : "Inactive"}</Badge>;

@@ -24,6 +24,8 @@ interface Gathering {
   date: string;
   location: string;
   description: string;
+  quota?: number;
+  registrationCount: number;
 }
 
 export default async function Home() {
@@ -43,7 +45,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="border-b">
+      <header className="">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
             <span>FSDevelopment</span>
@@ -53,7 +55,7 @@ export default async function Home() {
               Petunjuk
             </Link>
             <Link href="#registration" className="text-sm font-medium hover:underline underline-offset-4">
-              Registration
+              Daftar Tugas
             </Link>
             <Link href="#attendees" className="text-sm font-medium hover:underline underline-offset-4">
               List Pendaftaran
@@ -71,13 +73,13 @@ export default async function Home() {
         <AboutSection />
 
         {/* Registration Section */}
-        <section id="registration" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <section id="registration" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Sistim Pendaftaran Prodiakon</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Daftar Tugas Misa</h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Tugas Misa Tri Hari Suci
+                  Pendaftaran Tugas Misa Tri Hari Suci
                 </p>
               </div>
             </div>
@@ -93,7 +95,7 @@ export default async function Home() {
               </div>
             ) : (
               <div className="text-center p-8 bg-background rounded-lg shadow-sm max-w-md mx-auto">
-                <p className="text-muted-foreground">Tidak ada Misa yang available saat ini.</p>
+                <p className="text-muted-foreground">Tidak ada tugas misa saat ini.</p>
               </div>
             )}
           </div>
@@ -105,10 +107,10 @@ export default async function Home() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Prodiakon/Prodiakones yang sudah terdaftar
+                  Prodiakon/Prodiakones yang terdaftar
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Lihat pendaftaran
+                  Lihat dan periksa apa nama anda telah terdaftar
                 </p>
               </div>
             </div>
@@ -121,12 +123,14 @@ export default async function Home() {
                     registrations={registrations}
                     gatheringId={gathering._id}
                     gatheringTitle={gathering.title}
+                    quota={gathering.quota}
+                    registrationCount={gathering.registrationCount}
                   />
                 ))}
               </div>
             ) : (
               <div className="text-center p-8 bg-background rounded-lg shadow-sm max-w-md mx-auto">
-                <p className="text-muted-foreground">Tidak ada Misa yang available saat ini.</p>
+                <p className="text-muted-foreground">No active gatherings available at the moment.</p>
               </div>
             )}
           </div>

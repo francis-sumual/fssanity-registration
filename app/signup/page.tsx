@@ -1,5 +1,5 @@
-import { SignupForm } from "@/components/signup-form"
-import Link from "next/link"
+import { SignupForm } from "@/components/signup-form";
+import Link from "next/link";
 
 export default function SignupPage() {
   return (
@@ -20,6 +20,5 @@ export default function SignupPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

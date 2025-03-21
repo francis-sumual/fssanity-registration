@@ -284,17 +284,23 @@ export async function deleteMember(id: string) {
 // Gathering management functions
 export async function fetchGatherings() {
   try {
-    const gatherings = await client.fetch(`
+    const gatherings = await client.fetch(
+      `
       *[_type == "gathering"] | order(date desc) {
         _id,
         title,
         description,
         date,
         location,
+        quota,
         isActive,
-        createdAt
+        createdAt,
+        "registrationCount": count(*[_type == "registration" && references(^._id) && status == "confirmed"])
       }
-    `);
+      `,
+      {},
+      { cache: "no-store" }
+    );
     return gatherings;
   } catch (error) {
     console.error("Error fetching gatherings:", error);
@@ -312,7 +318,9 @@ export async function fetchActiveGatherings() {
         title,
         date,
         location,
-        description
+        description,
+        quota,
+        "registrationCount": count(*[_type == "registration" && references(^._id) && status == "confirmed"])
       }
       `,
       {},
@@ -330,6 +338,7 @@ export async function createGathering(data: {
   description: string;
   date: string;
   location: string;
+  quota?: number;
   isActive: boolean;
 }) {
   try {
@@ -339,6 +348,7 @@ export async function createGathering(data: {
       description: data.description,
       date: new Date(data.date).toISOString(),
       location: data.location,
+      quota: data.quota,
       isActive: data.isActive,
       createdAt: new Date().toISOString(),
     });
@@ -356,6 +366,7 @@ export async function updateGathering(
     description: string;
     date: string;
     location: string;
+    quota?: number;
     isActive: boolean;
   }
 ) {
@@ -367,6 +378,7 @@ export async function updateGathering(
         description: data.description,
         date: new Date(data.date).toISOString(),
         location: data.location,
+        quota: data.quota,
         isActive: data.isActive,
       })
       .commit();
@@ -424,6 +436,19 @@ export async function createRegistration(data: { gatheringId: string; memberId: 
 
     if (existingRegistration) {
       throw new Error("Member is already registered for this gathering");
+    }
+
+    // Check if the gathering has a quota and if it's reached
+    const gathering = await client.fetch(
+      `*[_type == "gathering" && _id == $gatheringId][0]{
+        quota,
+        "registrationCount": count(*[_type == "registration" && gathering._ref == $gatheringId && status == "confirmed"])
+      }`,
+      { gatheringId: data.gatheringId }
+    );
+
+    if (gathering && gathering.quota && gathering.registrationCount >= gathering.quota) {
+      throw new Error("This gathering has reached its maximum capacity");
     }
 
     const newRegistration = await client.create({

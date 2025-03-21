@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import type React from "react";
@@ -21,6 +21,8 @@ interface PublicRegistrationFormProps {
     date: string;
     location: string;
     description: string;
+    quota?: number;
+    registrationCount: number;
   }[];
   groups: {
     _id: string;
@@ -130,6 +132,12 @@ export function PublicRegistrationForm({
         throw new Error("Please select a member");
       }
 
+      // Check if the gathering has reached its quota
+      const selectedGathering = gatherings.find((g) => g._id === formData.gatheringId);
+      if (selectedGathering?.quota && selectedGathering.registrationCount >= selectedGathering.quota) {
+        throw new Error("This gathering has reached its maximum capacity");
+      }
+
       await createRegistration({
         gatheringId: formData.gatheringId,
         memberId: formData.memberId,
@@ -158,8 +166,8 @@ export function PublicRegistrationForm({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Pendaftaran Tugas</CardTitle>
-        <CardDescription>Pilih Misa dan Kelompok</CardDescription>
+        <CardTitle>Daftar untuk tugas misa</CardTitle>
+        <CardDescription>Pilih Misa, Kelompok dan Nama Anda</CardDescription>
       </CardHeader>
       <CardContent>
         {success && (
@@ -167,9 +175,9 @@ export function PublicRegistrationForm({
             <div className="flex items-center">
               <CheckCircle className="h-4 w-4 mr-2" />
               <div>
-                <AlertTitle>Pendaftaran Berhasil!</AlertTitle>
+                <AlertTitle>Berhasil Mendaftar!</AlertTitle>
                 <AlertDescription>
-                  {selectedMember?.name} Anda telah terdaftar untuk tugas Misa {selectedGathering?.title}.
+                  {selectedMember?.name} Anda telah terdaftar untuk tugas {selectedGathering?.title}.
                   <div className="mt-1 flex items-center text-sm">
                     <RefreshCw className="h-3 w-3 mr-1 animate-spin" />
                     Refreshing page...
@@ -183,7 +191,7 @@ export function PublicRegistrationForm({
         {error && (
           <Alert className="mb-4 bg-red-50 text-red-800 border-red-200">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Registration Failed</AlertTitle>
+            <AlertTitle>Pendaftaran gagal</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
@@ -192,7 +200,7 @@ export function PublicRegistrationForm({
           <div className="space-y-2">
             <Label htmlFor="gatheringId" className="flex items-center">
               <Calendar className="h-4 w-4 mr-2" />
-              Misa
+              Tugas Misa
             </Label>
             <Select
               value={formData.gatheringId}
@@ -200,20 +208,18 @@ export function PublicRegistrationForm({
               disabled={isLoading || success}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select a gathering" />
+                <SelectValue placeholder="Pilih Tugas Misa" />
               </SelectTrigger>
               <SelectContent>
                 {gatherings.map((gathering) => (
                   <SelectItem key={gathering._id} value={gathering._id}>
-                    {gathering.title}
-                    {" - "}
-                    <span>
-                      {new Intl.DateTimeFormat("id-ID", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                      }).format(new Date(gathering.date))}
-                    </span>
+                    {gathering.title} (
+                    {new Intl.DateTimeFormat("id-ID", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    }).format(new Date(gathering.date))}
+                    )
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -235,6 +241,14 @@ export function PublicRegistrationForm({
                     {selectedGathering.location}
                   </div>
                 )}
+                <div className="flex items-center mt-1">
+                  <Users className="h-3 w-3 mr-1" />
+                  {selectedGathering.registrationCount} registered
+                  {selectedGathering.quota ? ` / ${selectedGathering.quota} max` : ""}
+                  {selectedGathering.quota && selectedGathering.registrationCount >= selectedGathering.quota && (
+                    <span className="ml-2 text-red-500 font-medium">(Full)</span>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -250,7 +264,7 @@ export function PublicRegistrationForm({
               disabled={isLoading || success}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Pilih kelompok anda" />
+                <SelectValue placeholder="Pilih Kelompok Anda" />
               </SelectTrigger>
               <SelectContent>
                 {groups.map((group) => (
@@ -276,9 +290,9 @@ export function PublicRegistrationForm({
                 <SelectValue
                   placeholder={
                     !formData.groupId
-                      ? "Pilh kelompok terlebih dahulu"
+                      ? "Pilih Kelompok terlebih dahulu"
                       : filteredMembers.length === 0
-                      ? "No available members"
+                      ? "Tidak ada anggota yang bisa mendaftar"
                       : "Pilih Nama Anda"
                   }
                 />
@@ -298,9 +312,7 @@ export function PublicRegistrationForm({
               </SelectContent>
             </Select>
             {formData.groupId && filteredMembers.length === 0 && (
-              <p className="text-xs text-muted-foreground">
-                All members from this group are already registered for this gathering.
-              </p>
+              <p className="text-xs text-muted-foreground">Semua Anggota Kelompok telah mendaftar</p>
             )}
           </div>
         </form>
@@ -314,7 +326,7 @@ export function PublicRegistrationForm({
           {isLoading ? (
             <>
               <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-              Mendaftarkan anda...
+              Registering...
             </>
           ) : success ? (
             <>
@@ -322,7 +334,7 @@ export function PublicRegistrationForm({
               Refreshing...
             </>
           ) : (
-            "Daftar"
+            "Register"
           )}
         </Button>
       </CardFooter>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -16,13 +15,22 @@ interface Registration {
   registeredAt: string;
 }
 
+// Update the interface to include quota and registrationCount
 interface PublicRegistrationListProps {
   registrations: Registration[];
   gatheringId: string;
   gatheringTitle: string;
+  quota?: number;
+  registrationCount: number;
 }
 
-export function PublicRegistrationList({ registrations, gatheringId, gatheringTitle }: PublicRegistrationListProps) {
+export function PublicRegistrationList({
+  registrations,
+  gatheringId,
+  gatheringTitle,
+  quota,
+  registrationCount,
+}: PublicRegistrationListProps) {
   // Filter registrations for the selected gathering
   const filteredRegistrations = registrations.filter(
     (reg) => reg.gatheringId === gatheringId && reg.status === "confirmed"
@@ -44,9 +52,9 @@ export function PublicRegistrationList({ registrations, gatheringId, gatheringTi
   });
 
   // Format date for display
-  // const formatDate = (dateString: string) => {
-  //   return new Date(dateString).toLocaleDateString();
-  // };
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString();
+  };
 
   return (
     <Card className="w-full">
@@ -55,10 +63,18 @@ export function PublicRegistrationList({ registrations, gatheringId, gatheringTi
           <div>
             <CardTitle className="text-2xl">{gatheringTitle}</CardTitle>
             <CardDescription className="mt-2">
-              <span className="inline-flex items-center mr-4">
+              <span className="inline-flex items-center mr-4 text-sm">
                 <Users className="h-4 w-4 mr-1" />
-                {filteredRegistrations.length} Prodikon terdaftar
+                {filteredRegistrations.length} orang terdaftar
               </span>
+              {quota && (
+                <span className="inline-flex items-center text-sm">
+                  <span className={registrationCount >= quota ? "text-red-500" : "text-green-500"}>
+                    {registrationCount} / {quota} Kapasitas
+                  </span>
+                  {registrationCount >= quota && <span className="ml-2 text-red-500 font-medium">(Full)</span>}
+                </span>
+              )}
             </CardDescription>
           </div>
           <Badge className="text-sm px-3 py-1">{filteredRegistrations.length} Prodiakon/Prodiakones</Badge>
@@ -67,8 +83,8 @@ export function PublicRegistrationList({ registrations, gatheringId, gatheringTi
       <CardContent>
         {filteredRegistrations.length === 0 ? (
           <div className="text-center py-8 border rounded-md bg-muted/30">
-            <p className="text-muted-foreground">Belum ada yang mendaftar untuk tugas misa ini.</p>
-            <p className="text-sm text-muted-foreground mt-1">Jadilah pertama yang mendaftar!</p>
+            <p className="text-muted-foreground">Belum ada yang mendaftar.</p>
+            <p className="text-sm text-muted-foreground mt-1">Jadilah yang pertama mendaftar!</p>
           </div>
         ) : (
           <div className="space-y-6">
@@ -94,13 +110,7 @@ export function PublicRegistrationList({ registrations, gatheringId, gatheringTi
                       {regs.map((reg) => (
                         <TableRow key={reg._id}>
                           <TableCell className="font-medium">{reg.memberName}</TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            {new Intl.DateTimeFormat("id-ID", {
-                              year: "numeric",
-                              month: "2-digit",
-                              day: "2-digit",
-                            }).format(new Date(reg.registeredAt))}
-                          </TableCell>
+                          <TableCell className="hidden md:table-cell">{formatDate(reg.registeredAt)}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

@@ -8,14 +8,14 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} FSDevelopment. All rights reserved.
         </p>
         <nav className="flex gap-4 sm:gap-6">
+          <Link href="#about" className="text-sm font-medium hover:underline underline-offset-4">
+            Petunjuk
+          </Link>
           <Link href="#registration" className="text-sm font-medium hover:underline underline-offset-4">
             Daftar Tugas
           </Link>
           <Link href="#attendees" className="text-sm font-medium hover:underline underline-offset-4">
-            List Pendaftar
-          </Link>
-          <Link href="#about" className="text-sm font-medium hover:underline underline-offset-4">
-            Petunjuk
+            List Pendaftaran
           </Link>
         </nav>
       </div>
