@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.sannity.io",
+        hostname: "cdn.sanity.io",
         pathname: "/images/**",
       },
     ],
