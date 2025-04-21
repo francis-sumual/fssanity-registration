@@ -166,8 +166,8 @@ export function PublicRegistrationForm({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Daftar untuk tugas misa</CardTitle>
-        <CardDescription>Pilih Misa, Kelompok dan Nama Anda</CardDescription>
+        <CardTitle>Daftar untuk Kegiatan Perayaan Paskah Prodiakon</CardTitle>
+        <CardDescription>Pilih Kelompok dan Nama Anda</CardDescription>
       </CardHeader>
       <CardContent>
         {success && (
@@ -177,7 +177,7 @@ export function PublicRegistrationForm({
               <div>
                 <AlertTitle>Berhasil Mendaftar!</AlertTitle>
                 <AlertDescription>
-                  {selectedMember?.name} Anda telah terdaftar untuk tugas {selectedGathering?.title}.
+                  {selectedMember?.name} Anda telah terdaftar untuk kegiatan perayaan paskah {selectedGathering?.title}.
                   <div className="mt-1 flex items-center text-sm">
                     <RefreshCw className="h-3 w-3 mr-1 animate-spin" />
                     Refreshing page...
