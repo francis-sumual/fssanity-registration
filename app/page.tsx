@@ -98,7 +98,7 @@ export default async function Home() {
               </div>
             ) : (
               <div className="text-center p-8 bg-background rounded-lg shadow-sm max-w-md mx-auto">
-                <p className="text-muted-foreground">Tidak ada tugas misa saat ini.</p>
+                <p className="text-muted-foreground">Tidak ada kegiatan saat ini.</p>
               </div>
             )}
           </div>

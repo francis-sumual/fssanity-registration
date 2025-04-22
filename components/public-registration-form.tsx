@@ -200,7 +200,7 @@ export function PublicRegistrationForm({
           <div className="space-y-2">
             <Label htmlFor="gatheringId" className="flex items-center">
               <Calendar className="h-4 w-4 mr-2" />
-              Tugas Misa
+              Kegiatan
             </Label>
             <Select
               value={formData.gatheringId}
@@ -208,7 +208,7 @@ export function PublicRegistrationForm({
               disabled={isLoading || success}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Pilih Tugas Misa" />
+                <SelectValue placeholder="Pilih Kegiatan" />
               </SelectTrigger>
               <SelectContent>
                 {gatherings.map((gathering) => (
