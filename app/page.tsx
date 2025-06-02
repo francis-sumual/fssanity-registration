@@ -78,11 +78,10 @@ export default async function Home() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Form Pendaftaran Kegiatan Paskah Prodiakon
+                  Form Pendaftaran Pembekalan Prodi 5 Juli 2025
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Prodiakon Paroki Duren Sawit - Gereja Santa Anna, Berbagi kasih dan perhatian lebih kepada yang lemah,
-                  miskin dan tersingkirkan
+                  Prodiakon Paroki Duren Sawit - Gereja Santa Anna, Live Another Day - Climb a Little Higher
                 </p>
               </div>
             </div>
