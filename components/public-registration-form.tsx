@@ -166,7 +166,7 @@ export function PublicRegistrationForm({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Daftar untuk Kegiatan Pembekalan Prodi 5 Juli 2025</CardTitle>
+        <CardTitle>Daftar untuk Kegiatan Rekoleksi Prodiakon 5 September 2025</CardTitle>
         <CardDescription>Pilih Kelompok dan Nama Anda</CardDescription>
       </CardHeader>
       <CardContent>
